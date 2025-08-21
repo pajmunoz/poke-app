@@ -1,0 +1,82 @@
+.navigation-example {
+  padding: 1.5rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  margin: 1rem 0;
+}
+
+.navigation-example h3 {
+  margin-top: 0;
+  color: #333;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 0.5rem;
+}
+
+.current-route {
+  background-color: #e3f2fd;
+  padding: 0.75rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  border-left: 4px solid #2196f3;
+}
+
+.navigation-buttons {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.navigation-buttons button {
+  padding: 0.5rem 1rem;
+  border: 1px solid #007bff;
+  background-color: white;
+  color: #007bff;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.navigation-buttons button:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.navigation-buttons button.active {
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+}
+
+.available-routes {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 4px;
+  border: 1px solid #e0e0e0;
+}
+
+.available-routes h4 {
+  margin-top: 0;
+  color: #555;
+}
+
+.available-routes ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.available-routes li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.available-routes li:last-child {
+  border-bottom: none;
+}
+
+.available-routes .icon {
+  color: #666;
+  font-style: italic;
+}
