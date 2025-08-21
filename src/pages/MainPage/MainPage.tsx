@@ -8,14 +8,23 @@ export default function MainPage() {
         localStorage.removeItem("isAuthenticated");
         localStorage.removeItem("username");
         localStorage.removeItem("password");
+        localStorage.removeItem("token");
+        localStorage.removeItem("refreshToken");
+        localStorage.removeItem("refreshTokenExpiresAt");
+        localStorage.removeItem("expiresAt");
+        localStorage.removeItem("user");
+
+
         navigate(ROUTES.LOGIN);
     }
     return (
         <div>
-            PokeDex
+            <h1>PokeDex</h1>
             <Button type="primary" htmlType="submit" onClick={closeSession}>
                 Close Session
             </Button>
+            
+    
         </div>
     )
 }
