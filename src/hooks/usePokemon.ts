@@ -31,7 +31,7 @@ export const usePokemon = () => {
                 setPokemons(response.results);
                 
                 const newPagination = {
-                    total: response.count || 0,
+                    total: response.total || response.count || 0,
                     limit: params.limit || 5,
                     offset: params.offset || 0,
                     hasNext: !!response.next,
@@ -110,7 +110,7 @@ export const usePokemon = () => {
             if (response && isArray(response.results)) {
                 setPokemons(response.results);
                 setPagination({
-                    total: response.count || 0,
+                    total: response.total || response.count || 0,
                     limit: 5,
                     offset: 0,
                     hasNext: !!response.next,

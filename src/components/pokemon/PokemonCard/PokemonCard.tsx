@@ -1,8 +1,27 @@
 import { Card } from "antd";
-export default function PokemonCard({ pokemon }: { pokemon: any }) {
+import { formatPokemonName } from "../../../utils/helpers";
+
+interface PokemonCardProps {
+    pokemon: any;
+    onClick?: (pokemon: any) => void;
+}
+
+export default function PokemonCard({ pokemon, onClick }: PokemonCardProps) {
+    const handleClick = () => {
+        if (onClick) {
+            onClick(pokemon);
+            console.log(pokemon);
+        }
+      
+    };
+
     return (
-        <Card>
-            <h1>{pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</h1>
+        <Card 
+            hoverable 
+            onClick={handleClick}
+            style={{ cursor: onClick ? 'pointer' : 'default' }}
+        >
+            <h1>{formatPokemonName(pokemon.name)}</h1>
             <img style={{ width: '100px', height: '100px' }} src={pokemon.image} alt={pokemon.name} />
         </Card>
     )

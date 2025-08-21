@@ -9,6 +9,16 @@ export interface Pokemon {
     height?: number;
     weight?: number;
     abilities?: string[];
+    moves?: Array<{
+        name: string;
+        type: string;
+        power: number | null;
+        accuracy: number | null;
+    }>;
+    forms?: Array<{
+        name: string;
+        url: string;
+    }>;
     stats?: {
         hp: number;
         attack: number;
@@ -21,6 +31,7 @@ export interface Pokemon {
 
 export interface PokemonListResponse {
     count: number;
+    total: number;
     next: string | null;
     previous: string | null;
     results: Pokemon[];
@@ -64,6 +75,7 @@ export const getPokemons = async (params: PokemonListParams = {}): Promise<Pokem
 
         const data = await response.json();
         return data;
+
     } catch (error) {
         console.error('Failed to fetch pokemons:', error);
         throw error;
