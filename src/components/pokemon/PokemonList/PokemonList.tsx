@@ -1,0 +1,140 @@
+import { Row, Col, Spin, Alert, Button, Typography, Input } from "antd";
+import { ReloadOutlined, SearchOutlined } from "@ant-design/icons";
+import { usePokemon } from "../../../hooks/usePokemon";
+import PokemonCard from "../PokemonCard/PokemonCard";
+import Pagination from "../../common/Pagination/Pagination";
+
+const { Search } = Input;
+const { Text } = Typography;
+
+export default function PokemonList() {
+    const {
+        pokemons,
+        loading,
+        error,
+        pagination,
+        loadNextPage,
+        loadPreviousPage,
+        changeLimit,
+        goToPage,
+        searchPokemon,
+        refreshPokemons,
+        clearError,
+        hasPokemons,
+        currentPage,
+        totalPages
+    } = usePokemon();
+
+    const handleSearch = (value: string) => {
+        searchPokemon(value);
+    };
+
+    const handlePageChange = (page: number) => {
+        goToPage(page - 1);
+    };
+
+    const handleLimitChange = (current: number, size: number) => {
+        changeLimit(size);
+    };
+
+    return (
+        <div>
+            {/* Barra de búsqueda */}
+            <div style={{ 
+                marginBottom: '24px', 
+                textAlign: 'center',
+                display: 'flex',
+                justifyContent: 'center'
+            }}>
+                <Search
+                    placeholder="Search Pokemon by name..."
+                    onSearch={handleSearch}
+                    style={{ maxWidth: 400 }}
+                    loading={loading}
+                    enterButton={<SearchOutlined />}
+                />
+            </div>
+
+            {/* Manejo de errores */}
+            {error && (
+                <Alert
+                    message="Error"
+                    description={error}
+                    type="error"
+                    showIcon
+                    closable
+                    onClose={clearError}
+                    style={{ marginBottom: 16 }}
+                />
+            )}
+
+            {/* Contenido principal */}
+            <div>
+                {loading ? (
+                    <div style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        padding: '60px 20px',
+                        textAlign: 'center'
+                    }}>
+                        <Spin size="large" />
+                        <Text style={{ marginTop: 16, color: '#666', fontSize: 16 }}>
+                            Loading Pokemon...
+                        </Text>
+                    </div>
+                ) : hasPokemons ? (
+                    <>
+                        {/* Lista de Pokémon */}
+                        <Row gutter={[16, 16]} style={{ marginBottom: '32px' }}>
+                            {pokemons.map((pokemon: any) => (
+                                <Col xs={24} sm={12} md={8} lg={6} key={pokemon.id}>
+                                    <PokemonCard pokemon={pokemon} />
+                                </Col>
+                            ))}
+                        </Row>
+
+                        {/* Paginación */}
+                        <Pagination
+                            current={currentPage}
+                            total={pagination.total}
+                            pageSize={pagination.limit}
+                            onChange={handlePageChange}
+                            onShowSizeChange={handleLimitChange}
+                            disabled={loading}
+                        />
+                    </>
+                ) : (
+                    <div style={{
+                        textAlign: 'center',
+                        padding: '60px 20px',
+                        color: '#666'
+                    }}>
+                        <Text style={{ fontSize: 18, marginBottom: 16, display: 'block' }}>
+                            No Pokemon found.
+                        </Text>
+                        <Button onClick={refreshPokemons}>Try Again</Button>
+                    </div>
+                )}
+            </div>
+
+            {/* Botón de refresh */}
+            <div style={{
+                display: 'flex',
+                justifyContent: 'center',
+                marginTop: '24px',
+                padding: '20px 0'
+            }}>
+                <Button 
+                    icon={<ReloadOutlined />} 
+                    onClick={refreshPokemons}
+                    loading={loading}
+                    type="primary"
+                >
+                    Refresh Pokemon List
+                </Button>
+            </div>
+        </div>
+    );
+}
