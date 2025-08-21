@@ -27,7 +27,7 @@ export const loginUser = async (credentials: LoginCredentials): Promise<LoginRes
         });
 
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            throw new Error(`Credenciales invalidas`);
         }
 
         const data = await response.json();

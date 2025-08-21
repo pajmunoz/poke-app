@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Button from "../../components/common/Button/Button";
 import Input from "../../components/common/Input/Input";
-import { loginUser, LoginCredentials } from "../../api/authAPI";
+import { loginUser } from "../../api/authAPI";
 
 export default function LoginPage() {
     const navigate = useNavigate();
@@ -34,8 +34,7 @@ export default function LoginPage() {
 
             // El servidor no envía 'success' pero sí envía 'token' y mensaje de éxito
             const isSuccess = response && (
-                response.success === true || 
-                (response.token && response.message && response.message.toLowerCase().includes('exitoso'))
+                response.success === true 
             );
 
             if (isSuccess) {
@@ -66,12 +65,15 @@ export default function LoginPage() {
                     localStorage.setItem("refreshTokenExpiresAt", new Date(Date.now() + 1000 * 60 * 60 * 24).toISOString());
                 }
 
-                messageApi.success("Login successful!");
-                navigate("/main");
+                messageApi.success("Login exitoso!");
+                setTimeout(() => {
+                    navigate("/main");
+                }, 1000);
+             
                 setFormValues({ username: "", password: "" });
             } else {
                 setIsAuthenticated(false);
-                const errorMsg = response?.message || "Login failed";
+                const errorMsg = response?.message || "Login fallido";
                 messageApi.error(errorMsg);
             }
         } catch (error) {
@@ -79,12 +81,12 @@ export default function LoginPage() {
             
             if (error instanceof Error) {
                 if (error.message.includes('ECONNREFUSED') || error.message.includes('fetch')) {
-                    messageApi.error("Cannot connect to server. Please check if the server is running on port 3000.");
+                    messageApi.error("No se puede conectar al servidor. Por favor, verifique si el servidor está corriendo en el puerto 3000.");
                 } else {
-                    messageApi.error(error.message || "Login failed. Please try again.");
+                    messageApi.error(error.message || "Login fallido. Por favor, intente nuevamente.");
                 }
             } else {
-                messageApi.error("An unexpected error occurred. Please try again.");
+                messageApi.error("Ocurrió un error inesperado. Por favor, intente nuevamente.");
             }
         } finally {
             setIsLoading(false);

@@ -19,7 +19,6 @@ export default function MainPage() {
     }
     return (
         <div>
-            <h1>PokeDex</h1>
             <Button type="primary" htmlType="submit" onClick={closeSession}>
                 Close Session
             </Button>
