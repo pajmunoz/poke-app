@@ -1,7 +1,7 @@
 
 
-import {Typography, Row, Col, Tag, Statistic, Divider, Image, Space } from 'antd';
-import { formatPokemonName, formatHeight, formatWeight } from '../../../utils/helpers';
+import {Typography, Row, Col, Tag, Divider, Image } from 'antd';
+import { formatPokemonName } from '../../../utils/helpers';
 import Modal from '../../common/Modal/Modal';
 import './PokemonDetailModal.css';
 
@@ -103,33 +103,6 @@ export default function PokemonDetailModal({ pokemon, open, onClose }: PokemonDe
                     </Col>
                 </Row>
 
-                <Divider />
-
-                {/* Estadísticas físicas */}
-                <Row gutter={[24, 24]} className="physical-stats">
-                    <Col xs={24} md={8}>
-                        <Statistic
-                            title="Height"
-                            value={formatHeight(pokemon.height || 0)}
-                            suffix=""
-                        />
-                    </Col>
-                    <Col xs={24} md={8}>
-                        <Statistic
-                            title="Weight"
-                            value={formatWeight(pokemon.weight || 0)}
-                            suffix=""
-                        />
-                    </Col>
-                    <Col xs={24} md={8}>
-                        <Statistic
-                            title="ID"
-                            value={pokemon.id}
-                            suffix=""
-                        />
-                    </Col>
-                </Row>
-
                 {/* Movimientos */}
                 {pokemon.moves && Array.isArray(pokemon.moves) && pokemon.moves.length > 0 && (
                     <>
@@ -206,64 +179,6 @@ export default function PokemonDetailModal({ pokemon, open, onClose }: PokemonDe
                                 })}
                             </Row>
                         </div>
-                    </>
-                )}
-
-                {/* Estadísticas de batalla */}
-                {pokemon.stats && (
-                    <>
-                        <Divider />
-                        <Title level={4}>Battle Stats</Title>
-                        <Row gutter={[16, 16]} className="stats-grid">
-                            <Col xs={24} sm={12} md={8}>
-                                <Statistic
-                                    title="HP"
-                                    value={pokemon.stats.hp}
-                                    suffix=""
-                                    valueStyle={{ color: '#52c41a' }}
-                                />
-                            </Col>
-                            <Col xs={24} sm={12} md={8}>
-                                <Statistic
-                                    title="Attack"
-                                    value={pokemon.stats.attack}
-                                    suffix=""
-                                    valueStyle={{ color: '#ff4d4f' }}
-                                />
-                            </Col>
-                            <Col xs={24} sm={12} md={8}>
-                                <Statistic
-                                    title="Defense"
-                                    value={pokemon.stats.defense}
-                                    suffix=""
-                                    valueStyle={{ color: '#1890ff' }}
-                                />
-                            </Col>
-                            <Col xs={24} sm={12} md={8}>
-                                <Statistic
-                                    title="Speed"
-                                    value={pokemon.stats.speed}
-                                    suffix=""
-                                    valueStyle={{ color: '#722ed1' }}
-                                />
-                            </Col>
-                            <Col xs={24} sm={12} md={8}>
-                                <Statistic
-                                    title="Sp. Attack"
-                                    value={pokemon.stats.specialAttack}
-                                    suffix=""
-                                    valueStyle={{ color: '#fa8c16' }}
-                                />
-                            </Col>
-                            <Col xs={24} sm={12} md={8}>
-                                <Statistic
-                                    title="Sp. Defense"
-                                    value={pokemon.stats.specialDefense}
-                                    suffix=""
-                                    valueStyle={{ color: '#13c2c2' }}
-                                />
-                            </Col>
-                        </Row>
                     </>
                 )}
             </div>
