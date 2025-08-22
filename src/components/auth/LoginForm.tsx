@@ -1,5 +1,6 @@
 import { Form, Input, Button } from 'antd';
 import { useState, useEffect } from 'react';
+import "./LoginForm.css";
 
 interface LoginFormProps {
     onSubmit: (values: { username: string; password: string }) => void;
@@ -30,7 +31,7 @@ export default function LoginForm({ onSubmit, isLoading = false, initialValues =
     const isDisabled = !formValues.username || !formValues.password;
 
     return (
-        <Form data-testid="login-form">
+        <Form data-testid="login-form" className="login-form">
             <Form.Item label="Username" name="username">
                 <Input
                     data-testid="username-input"
