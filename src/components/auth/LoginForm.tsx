@@ -12,9 +12,6 @@ export default function LoginForm({ onSubmit, isLoading = false, initialValues =
     const [formValues, setFormValues] = useState(initialValues);
 
     // Sincronizar formValues con initialValues cuando cambien
-    useEffect(() => {
-        setFormValues(initialValues);
-    }, [initialValues]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
