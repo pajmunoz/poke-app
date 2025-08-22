@@ -19,6 +19,7 @@ export default function Pagination({
 }: PaginationProps) {
     return (
         <AntPagination
+            data-testid="pagination"
             current={current}
             total={total}
             pageSize={pageSize}

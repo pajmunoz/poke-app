@@ -72,15 +72,19 @@ export default function PokemonList() {
     };
 
     return (
-        <div>
+        <div data-testid="pokemon-list">
             {/* Barra de búsqueda */}
-            <div style={{ 
-                marginBottom: '24px', 
-                textAlign: 'center',
-                display: 'flex',
-                justifyContent: 'center'
-            }}>
+            <div 
+                data-testid="search-container"
+                style={{ 
+                    marginBottom: '24px', 
+                    textAlign: 'center',
+                    display: 'flex',
+                    justifyContent: 'center'
+                }}
+            >
                 <Search
+                    data-testid="pokemon-search"
                     placeholder="Search Pokemon by name..."
                     onSearch={handleSearch}
                     style={{ maxWidth: 400 }}
@@ -95,6 +99,7 @@ export default function PokemonList() {
             {/* Manejo de errores */}
             {error && (
                 <Alert
+                    data-testid="error-alert"
                     message="Error"
                     description={error}
                     type="error"
@@ -106,16 +111,19 @@ export default function PokemonList() {
             )}
 
             {/* Contenido principal */}
-            <div>
+            <div data-testid="pokemon-content">
                 {loading ? (
-                    <div style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        padding: '60px 20px',
-                        textAlign: 'center'
-                    }}>
+                    <div 
+                        data-testid="loading-state"
+                        style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            padding: '60px 20px',
+                            textAlign: 'center'
+                        }}
+                    >
                         <Spin size="large" />
                         <Text style={{ marginTop: 16, color: '#666', fontSize: 16 }}>
                             Loading Pokemon...
@@ -124,7 +132,11 @@ export default function PokemonList() {
                 ) : hasPokemons ? (
                     <>
                         {/* Lista de Pokémon */}
-                        <Row gutter={[16, 16]} style={{ marginBottom: '32px' }}>
+                        <Row 
+                            data-testid="pokemon-grid"
+                            gutter={[16, 16]} 
+                            style={{ marginBottom: '32px' }}
+                        >
                             {pokemons.map((pokemon: any) => (
                                 <Col xs={24} sm={12} md={8} lg={6} key={pokemon.id}>
                                     <PokemonCard pokemon={pokemon} onClick={handlePokemonClick} />
@@ -143,27 +155,36 @@ export default function PokemonList() {
                         />
                     </>
                 ) : (
-                    <div style={{
-                        textAlign: 'center',
-                        padding: '60px 20px',
-                        color: '#666'
-                    }}>
+                    <div 
+                        data-testid="no-pokemon-state"
+                        style={{
+                            textAlign: 'center',
+                            padding: '60px 20px',
+                            color: '#666'
+                        }}
+                    >
                         <Text style={{ fontSize: 18, marginBottom: 16, display: 'block' }}>
                             No Pokemon found.
                         </Text>
-                        <Button onClick={refreshPokemons}>Try Again</Button>
+                        <Button data-testid="try-again-button" onClick={refreshPokemons}>
+                            Try Again
+                        </Button>
                     </div>
                 )}
             </div>
 
             {/* Botón de refresh */}
-            <div style={{
-                display: 'flex',
-                justifyContent: 'center',
-                marginTop: '24px',
-                padding: '20px 0'
-            }}>
+            <div 
+                data-testid="refresh-container"
+                style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    marginTop: '24px',
+                    padding: '20px 0'
+                }}
+            >
                 <Button 
+                    data-testid="refresh-button"
                     icon={<ReloadOutlined />} 
                     onClick={refreshPokemons}
                     loading={loading}

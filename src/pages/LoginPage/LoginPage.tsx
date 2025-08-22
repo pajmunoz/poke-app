@@ -1,25 +1,14 @@
-import { Form, message } from "antd";
+import { message } from "antd";
 import Header from "../../components/layout/Header";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import Button from "../../components/common/Button/Button";
-import Input from "../../components/common/Input/Input";
+import { useState } from "react";
+import LoginForm from "../../components/auth/LoginForm";
 import { loginUser } from "../../api/authAPI";
 
 export default function LoginPage() {
     const navigate = useNavigate();
-    const [isDisabled, setIsDisabled] = useState(true);
-    const [formValues, setFormValues] = useState({ username: "", password: "" });
     const [messageApi, contextHolder] = message.useMessage();
     const [isLoading, setIsLoading] = useState(false);
-
-    const handleChange = (e: any) => {
-        setFormValues({ ...formValues, [e.target.name]: e.target.value });
-    }
-
-    useEffect(() => {
-        setIsDisabled(!formValues.username || !formValues.password);
-    }, [formValues]);
 
     const onSubmit = async (values: any) => {
         setIsLoading(true);
@@ -66,7 +55,6 @@ export default function LoginPage() {
                     navigate("/main");
                 }, 1000);
 
-                setFormValues({ username: "", password: "" });
             } else {
                 const errorMsg = response?.message || "Login fallido";
                 messageApi.error(errorMsg);
@@ -90,34 +78,11 @@ export default function LoginPage() {
         <div>
             {contextHolder}
             <Header />
-
-            <Form>
-                <Form.Item label="Username" name="username">
-                    <Input
-                        onChange={handleChange}
-                        name="username"
-                        value={formValues.username}
-                        disabled={isLoading}
-                    />
-                </Form.Item>
-                <Form.Item label="Password" name="password" >
-                    <Input
-                        onChange={handleChange}
-                        name="password"
-                        value={formValues.password}
-                        type="password"
-                        disabled={isLoading}
-                    />
-                </Form.Item>
-                <Form.Item>
-                    <Button
-                        onClick={() => onSubmit(formValues)}
-                        disabled={isDisabled || isLoading}
-                    >
-                        {isLoading ? "Connecting to server..." : "Login"}
-                    </Button>
-                </Form.Item>
-            </Form>
+            
+            <LoginForm 
+                onSubmit={onSubmit}
+                isLoading={isLoading}
+            />
         </div>
     );
 } 

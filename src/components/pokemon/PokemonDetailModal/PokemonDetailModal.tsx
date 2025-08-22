@@ -52,7 +52,7 @@ export default function PokemonDetailModal({ pokemon, open, onClose }: PokemonDe
             width={800}
             title={formatPokemonName(pokemon.name)}
         >
-            <div className="pokemon-detail-modal" style={{ padding: '20px 0' }}>
+            <div data-testid="pokemon-detail-modal" className="pokemon-detail-modal" style={{ padding: '20px 0' }}>
                 {/* Imagen y tipos */}
                 <Row gutter={[24, 24]} style={{ marginBottom: 24 }}>
                     <Col xs={24} md={12} className="pokemon-image-container">
