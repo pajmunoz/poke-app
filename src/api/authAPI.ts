@@ -1,3 +1,4 @@
+// const API_BASE_URL = 'https://server-pokemon3.vercel.app';
 const API_BASE_URL = 'http://localhost:3000';
 
 export interface LoginCredentials {
@@ -42,7 +43,7 @@ export const loginUser = async (credentials: LoginCredentials): Promise<LoginRes
 export const testLogin = async (): Promise<LoginResponse> => {
     const testCredentials: LoginCredentials = {
         username: 'admin',
-        password: 'password'
+        password: 'admin'
     };
 
     console.log('Sending login request to server...');

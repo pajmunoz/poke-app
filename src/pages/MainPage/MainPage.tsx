@@ -19,7 +19,7 @@ export default function MainPage() {
     };
 
     return (
-        <div>
+        <div data-testid="main-page">
             <Button type="primary" danger onClick={closeSession}>
                 Close Session
             </Button>

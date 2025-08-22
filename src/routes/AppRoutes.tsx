@@ -1,13 +1,12 @@
-import React from 'react';
 import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import LoginPage from '../pages/LoginPage/LoginPage';
 import MainPage from '../pages/MainPage/MainPage';
 import Header from '../components/layout/Header';
-import RouteGuard from '../components/common/RouteGuard';
+import RouteGuard from '../components/common/RouteGuard/RouteGuard';
 import { ROUTES } from './routes.config';
 
 // Layout Component with Header
-const AppLayout: React.FC = () => {
+const AppLayout = () => {
     return (
         <div className="app-layout">
             <Header />
@@ -18,7 +17,7 @@ const AppLayout: React.FC = () => {
     );
 };
 
-const AppRoutes: React.FC = () => {
+const AppRoutes = () => {
     return (
         <Routes>
             {/* Public Routes */}

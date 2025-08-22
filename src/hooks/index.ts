@@ -1,11 +1,9 @@
-// This file is maintained for backward compatibility
-// New code should use the specific hooks: usePokemonList, usePokemonById, etc.
-
-export { usePokemonList as usePokemon } from './usePokemonList';
+// Export all hooks
+export { usePokemonList } from './usePokemonList';
 export { usePokemonById } from './usePokemonById';
 export { usePagination } from './usePagination';
 export { useSearch } from './useSearch';
 export { useAsyncState } from './useAsyncState';
 
-// Re-export types
+// Export types
 export type { PaginationState } from './usePagination';
