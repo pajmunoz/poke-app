@@ -1,9 +1,7 @@
-import { Button, Typography, Divider } from "antd";
+import { Button, Divider } from "antd";
 import { ROUTES } from "../../routes/routes.config";
 import { useNavigate } from "react-router-dom";
 import PokemonList from "../../components/pokemon/PokemonList/PokemonList";
-
-const { Title } = Typography;
 
 export default function MainPage() {
     const navigate = useNavigate();

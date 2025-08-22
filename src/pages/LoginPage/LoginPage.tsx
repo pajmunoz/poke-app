@@ -11,7 +11,6 @@ export default function LoginPage() {
     const [isDisabled, setIsDisabled] = useState(true);
     const [formValues, setFormValues] = useState({ username: "", password: "" });
     const [messageApi, contextHolder] = message.useMessage();
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
     const handleChange = (e: any) => {
@@ -24,7 +23,6 @@ export default function LoginPage() {
 
     const onSubmit = async (values: any) => {
         setIsLoading(true);
-        setIsAuthenticated(false);
 
         try {
             const response = await loginUser({
@@ -34,31 +32,29 @@ export default function LoginPage() {
 
             // El servidor no envía 'success' pero sí envía 'token' y mensaje de éxito
             const isSuccess = response && (
-                response.success === true 
+                response.success === true
             );
 
             if (isSuccess) {
-                setIsAuthenticated(true);
-                
                 // Guardar datos de autenticación
                 localStorage.setItem("isAuthenticated", "true");
                 localStorage.setItem("username", values.username);
                 localStorage.setItem("password", values.password);
                 localStorage.setItem("user", JSON.stringify(values));
-                
+
                 // Guardar token del servidor si existe
                 if (response.token) {
                     localStorage.setItem("token", response.token);
                 }
-                
+
                 // Guardar información del usuario del servidor si existe
                 if (response.user) {
                     localStorage.setItem("user", JSON.stringify(response.user));
                 }
-                
+
                 // Establecer expiración (24 horas por defecto)
                 localStorage.setItem("expiresAt", new Date(Date.now() + 1000 * 60 * 60 * 24).toISOString());
-                
+
                 // Refresh token si existe
                 if (response.token) {
                     localStorage.setItem("refreshToken", response.token);
@@ -69,16 +65,13 @@ export default function LoginPage() {
                 setTimeout(() => {
                     navigate("/main");
                 }, 1000);
-             
+
                 setFormValues({ username: "", password: "" });
             } else {
-                setIsAuthenticated(false);
                 const errorMsg = response?.message || "Login fallido";
                 messageApi.error(errorMsg);
             }
         } catch (error) {
-            setIsAuthenticated(false);
-            
             if (error instanceof Error) {
                 if (error.message.includes('ECONNREFUSED') || error.message.includes('fetch')) {
                     messageApi.error("No se puede conectar al servidor. Por favor, verifique si el servidor está corriendo en el puerto 3000.");
@@ -100,27 +93,27 @@ export default function LoginPage() {
 
             <Form>
                 <Form.Item label="Username" name="username">
-                    <Input 
-                        onChange={handleChange} 
-                        name="username" 
+                    <Input
+                        onChange={handleChange}
+                        name="username"
                         value={formValues.username}
                         disabled={isLoading}
                     />
                 </Form.Item>
                 <Form.Item label="Password" name="password" >
-                    <Input 
-                        onChange={handleChange} 
-                        name="password" 
+                    <Input
+                        onChange={handleChange}
+                        name="password"
                         value={formValues.password}
                         type="password"
                         disabled={isLoading}
                     />
                 </Form.Item>
                 <Form.Item>
-                    <Button 
-                        onClick={() => onSubmit(formValues)} 
+                    <Button
+                        onClick={() => onSubmit(formValues)}
                         disabled={isDisabled || isLoading}
-                    > 
+                    >
                         {isLoading ? "Connecting to server..." : "Login"}
                     </Button>
                 </Form.Item>
