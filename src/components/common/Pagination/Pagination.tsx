@@ -22,7 +22,7 @@ export default function Pagination({
             data-testid="pagination"
             current={current}
             total={total}
-            pageSize={pageSize}
+            pageSize={pageSize || 8}
             showSizeChanger
             showQuickJumper
             showTotal={(total, range) => 

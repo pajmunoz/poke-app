@@ -4,12 +4,12 @@ import MainPage from '../pages/MainPage/MainPage';
 import Header from '../components/layout/Header';
 import RouteGuard from '../components/common/RouteGuard/RouteGuard';
 import { ROUTES } from './routes.config';
+import "./AppRoutes.css";
 
 // Layout Component with Header
 const AppLayout = () => {
     return (
         <div className="app-layout">
-            <Header />
             <main className="main-content">
                 <Outlet />
             </main>

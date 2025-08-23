@@ -42,7 +42,7 @@ export interface PokemonListParams {
 }
 
 export const getPokemons = async (params: PokemonListParams = {}): Promise<PokemonListResponse> => {
-    const { limit = 5, offset = 0 } = params;
+    const { limit = 8, offset = 0 } = params;
     
     // Obtener el token del localStorage
     const token = localStorage.getItem('token');

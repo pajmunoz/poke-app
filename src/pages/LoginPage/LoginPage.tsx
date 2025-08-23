@@ -1,4 +1,4 @@
-import { message } from "antd";
+import { Divider, message } from "antd";
 import Header from "../../components/layout/Header";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -76,10 +76,12 @@ export default function LoginPage() {
 
     return (
         <div>
-            {contextHolder}
             <Header />
-            
-            <LoginForm 
+            <Divider />
+            {contextHolder}
+
+
+            <LoginForm
                 onSubmit={onSubmit}
                 isLoading={isLoading}
             />

@@ -5,6 +5,7 @@ import PokemonCard from "../PokemonCard/PokemonCard";
 import Pagination from "../../common/Pagination/Pagination";
 import PokemonDetailModal from "../PokemonDetailModal/PokemonDetailModal";
 import { useState, useEffect } from "react";
+import Loader from "../../common/Loader/Loader";
 
 const { Search } = Input;
 const { Text } = Typography;
@@ -13,7 +14,7 @@ export default function PokemonList() {
     const [localSearchQuery, setLocalSearchQuery] = useState('');
     const [selectedPokemon, setSelectedPokemon] = useState<any>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    
+
     const {
         pokemons,
         loading,
@@ -46,7 +47,7 @@ export default function PokemonList() {
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
         setLocalSearchQuery(value);
-        
+
         // Si se borra todo el texto, limpiar la búsqueda
         if (!value.trim()) {
             clearSearch();
@@ -74,10 +75,10 @@ export default function PokemonList() {
     return (
         <div data-testid="pokemon-list">
             {/* Barra de búsqueda */}
-            <div 
+            <div
                 data-testid="search-container"
-                style={{ 
-                    marginBottom: '24px', 
+                style={{
+                    marginBottom: '24px',
                     textAlign: 'center',
                     display: 'flex',
                     justifyContent: 'center'
@@ -113,7 +114,7 @@ export default function PokemonList() {
             {/* Contenido principal */}
             <div data-testid="pokemon-content">
                 {loading ? (
-                    <div 
+                    <div
                         data-testid="loading-state"
                         style={{
                             display: 'flex',
@@ -124,17 +125,14 @@ export default function PokemonList() {
                             textAlign: 'center'
                         }}
                     >
-                        <Spin size="large" />
-                        <Text style={{ marginTop: 16, color: '#666', fontSize: 16 }}>
-                            Loading Pokemon...
-                        </Text>
+
                     </div>
                 ) : hasPokemons ? (
                     <>
                         {/* Lista de Pokémon */}
-                        <Row 
+                        <Row
                             data-testid="pokemon-grid"
-                            gutter={[16, 16]} 
+                            gutter={[16, 16]}
                             style={{ marginBottom: '32px' }}
                         >
                             {pokemons.map((pokemon: any) => (
@@ -155,7 +153,7 @@ export default function PokemonList() {
                         />
                     </>
                 ) : (
-                    <div 
+                    <div
                         data-testid="no-pokemon-state"
                         style={{
                             textAlign: 'center',
@@ -174,7 +172,7 @@ export default function PokemonList() {
             </div>
 
             {/* Botón de refresh */}
-            <div 
+            <div
                 data-testid="refresh-container"
                 style={{
                     display: 'flex',
@@ -183,9 +181,9 @@ export default function PokemonList() {
                     padding: '20px 0'
                 }}
             >
-                <Button 
+                <Button
                     data-testid="refresh-button"
-                    icon={<ReloadOutlined />} 
+                    icon={<ReloadOutlined />}
                     onClick={refreshPokemons}
                     loading={loading}
                     type="primary"

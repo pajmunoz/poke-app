@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, Navigate } from 'react-router-dom';
 import { ROUTES } from '../../../routes/routes.config';
 import Loader from '../Loader/Loader';
+import './RouteGuard.css';
 
 interface RouteGuardProps {
     children: React.ReactNode;
@@ -21,16 +22,22 @@ const RouteGuard: React.FC<RouteGuardProps> = ({
     useEffect(() => {
         // Simulate authentication check
         const checkAuth = async () => {
+            
             try {
                 // You can implement your actual auth check here
                 // For now, we'll use localStorage
+               
                 const authStatus = localStorage.getItem('isAuthenticated') === 'true';
                 setIsAuthenticated(authStatus);
+             
             } catch (error) {
                 console.error('Authentication check failed:', error);
                 setIsAuthenticated(false);
             } finally {
-                setIsLoading(false);
+                setTimeout(() => {
+                    setIsLoading(false);
+                }, 500)
+
             }
         };
 
@@ -40,9 +47,8 @@ const RouteGuard: React.FC<RouteGuardProps> = ({
     // Show loading while checking authentication
     if (isLoading) {
         return (
-            <div className="route-guard-loading">
+            <div className="container-loader">
                 <Loader />
-                <p>Checking authentication...</p>
             </div>
         );
     }

@@ -4,7 +4,7 @@ import { isArray, hasItems } from '../utils/helpers';
 import { usePagination } from './usePagination';
 import { useSearch } from './useSearch';
 
-export const usePokemonList = (initialLimit: number = 5) => {
+export const usePokemonList = (initialLimit: number = 8) => {
     const [pokemons, setPokemons] = useState<Pokemon[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);

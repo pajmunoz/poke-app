@@ -9,7 +9,7 @@ export interface PaginationState {
     hasPrevious: boolean;
 }
 
-export const usePagination = (initialLimit: number = 5) => {
+export const usePagination = (initialLimit: number = 8) => {
     const [pagination, setPagination] = useState<PaginationState>({
         total: 0,
         limit: initialLimit,
