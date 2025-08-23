@@ -18,7 +18,7 @@ export default function Pagination({
     disabled = false
 }: PaginationProps) {
     return (
-        <Flex justify="center" align="center" style={{ marginTop: '20px', width: '100%' }}>
+        <Flex justify="center" align="center" style={{ margin: '20px', width: '100%' }}>
 
             <AntPagination
                 data-testid="pagination"

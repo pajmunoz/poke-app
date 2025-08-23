@@ -139,11 +139,26 @@ export default function PokemonList() {
                         {/* Lista de Pokémon */}
                         <Row
                             data-testid="pokemon-grid"
-                            gutter={[16, 16]}
-                            style={{ marginBottom: '32px' }}
+                            gutter={pokemons.length === 1 ? [0, 0] : [16, 16]}
+                            style={{ 
+                                marginBottom: '32px', 
+                                display: pokemons.length === 1 ? 'block' : 'flex',
+                                justifyContent: pokemons.length === 1 ? 'center' : 'flex-start'
+                            }}
                         >
                             {pokemons.map((pokemon: any) => (
-                                <Col xs={24} sm={12} md={8} lg={6} key={pokemon.id}>
+                                <Col 
+                                    xs={24} 
+                                    sm={pokemons.length === 1 ? 24 : 12} 
+                                    md={pokemons.length === 1 ? 20 : 8} 
+                                    lg={pokemons.length === 1 ? 16 : 6} 
+                                    xl={pokemons.length === 1 ? 14 : 6}
+                                    style={{ 
+                                        maxWidth: pokemons.length === 1 ? '600px' : '100%',
+                                        margin: pokemons.length === 1 ? '0 auto' : '0'
+                                    }}
+                                    key={pokemon.id}
+                                >
                                     <PokemonCard pokemon={pokemon} onClick={handlePokemonClick} />
                                 </Col>
                             ))}

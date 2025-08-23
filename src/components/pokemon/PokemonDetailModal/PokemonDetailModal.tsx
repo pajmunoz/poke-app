@@ -1,6 +1,6 @@
 
 
-import {Typography, Row, Col, Tag, Divider, Image } from 'antd';
+import { Typography, Row, Col, Tag, Divider, Image, Button } from 'antd';
 import { formatPokemonName } from '../../../utils/helpers';
 import Modal from '../../common/Modal/Modal';
 import './PokemonDetailModal.css';
@@ -42,41 +42,91 @@ interface PokemonDetailModalProps {
 }
 
 export default function PokemonDetailModal({ pokemon, open, onClose }: PokemonDetailModalProps) {
+    console.log('pokemon', pokemon);
     if (!pokemon) return null;
+
+    // Función para obtener el color del tipo del Pokémon
+    const getTypeColor = (types: string[] | undefined) => {
+        if (!types || types.length === 0) {
+            return '#A8A878'; // Color por defecto (normal)
+        }
+
+        const primaryType = types[0];
+        const typeColors: { [key: string]: string } = {
+            normal: '#A8A878',
+            fire: '#F08030',
+            water: '#6890F0',
+            electric: '#F8D030',
+            grass: '#78C850',
+            ice: '#98D8D8',
+            fighting: '#C03028',
+            poison: '#A040A0',
+            ground: '#E0C068',
+            flying: '#A890F0',
+            psychic: '#F85888',
+            bug: '#A8B820',
+            rock: '#B8A038',
+            ghost: '#705898',
+            dragon: '#7038F8',
+            dark: '#705848',
+            steel: '#B8B8D0',
+            fairy: '#EE99AC'
+        };
+
+        return typeColors[primaryType.toLowerCase()] || '#A8A878';
+    };
+
+    const typeColor = getTypeColor(pokemon.types);
 
     return (
         <Modal
             open={open}
             onClose={onClose}
             footer={null}
-            width={800}
-            title={formatPokemonName(pokemon.name)}
+            width={600}
+            title=""
         >
-            <div data-testid="pokemon-detail-modal" className="pokemon-detail-modal" style={{ padding: '20px 0' }}>
+            <div data-testid="pokemon-detail-modal" className="pokemon-detail-modal">
                 {/* Imagen y tipos */}
-                <Row gutter={[24, 24]} style={{ marginBottom: 24 }}>
-                    <Col xs={24} md={12} className="pokemon-image-container">
+                <Row gutter={[24, 24]}>
+
+                    <Col xs={24} md={6} className="pokemon-image-container">
+                        <div className="poke-color-type" style={{ backgroundColor: typeColor }}></div>
                         <Image
                             src={pokemon.image}
                             alt={pokemon.name}
-                            width={200}
-                            height={200}
-                            style={{ objectFit: 'contain' }}
+                            width="100%"
+                            height="100%"
+                            style={{ objectFit: 'contain', maxWidth: '180px' }}
                             fallback="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=="
                         />
-                        <div className="pokemon-id">
-                            <Text type="secondary">#{pokemon.id.toString().padStart(3, '0')}</Text>
-                        </div>
+
                     </Col>
-                    <Col xs={24} md={12}>
-                        <div className="types-abilities-container">
+                    <Col xs={24} md={18}>
+                        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'start', alignItems: 'center', marginBottom: '1em' }}>
+                            <Text strong style={{ fontSize: '2em', marginRight: '1em' }}>{formatPokemonName(pokemon.name)}</Text>
+
+                            <Text type="secondary" style={{ fontSize: '1.5em' }}>#{pokemon.id.toString().padStart(3, '0')}</Text>
+
+                        </div>
+
+                        <div className="content-container">
+                            <div className="measures-section">
+                                <Text strong>Height:</Text>
+                                <Text type="secondary">{pokemon.height} m</Text>
+
+                            </div>
+                            <div className="measures-section">
+                                <Text strong>Weight:</Text>
+                                <Text type="secondary">{pokemon.weight} kg</Text>
+                            </div>
                             <div className="type-section">
                                 <Text strong>Types:</Text>
                                 <div className="type-tags">
                                     {pokemon.types?.map((type, index) => (
-                                        <Tag 
-                                            key={index} 
-                                            color="blue" 
+                                        <Tag
+                                            key={index}
+                                            color="blue"
                                             className="type-tag"
                                         >
                                             {formatPokemonName(type)}
@@ -84,14 +134,14 @@ export default function PokemonDetailModal({ pokemon, open, onClose }: PokemonDe
                                     )) || <Text type="secondary">No types available</Text>}
                                 </div>
                             </div>
-                            
+
                             <div className="ability-section">
                                 <Text strong>Abilities:</Text>
                                 <div className="ability-tags">
                                     {pokemon.abilities?.map((ability, index) => (
-                                        <Tag 
-                                            key={index} 
-                                            color="green" 
+                                        <Tag
+                                            key={index}
+                                            color="green"
                                             className="ability-tag"
                                         >
                                             {formatPokemonName(ability)}
@@ -99,88 +149,58 @@ export default function PokemonDetailModal({ pokemon, open, onClose }: PokemonDe
                                     )) || <Text type="secondary">No abilities available</Text>}
                                 </div>
                             </div>
-                        </div>
-                    </Col>
-                </Row>
 
-                {/* Movimientos */}
-                {pokemon.moves && Array.isArray(pokemon.moves) && pokemon.moves.length > 0 && (
-                    <>
-                        <Divider />
-                        <Title level={4}>Moves</Title>
-                        <div className="moves-grid">
-                            <Row gutter={[8, 8]}>
-                                {pokemon.moves.map((move, index) => {
-                                    if (!move || typeof move !== 'object') {
-                                        return null;
-                                    }
-                                    
-                                    const moveName = move.name || 'Unknown Move';
-                                    const moveType = move.type || 'Unknown Type';
-                                    const movePower = move.power;
-                                    const moveAccuracy = move.accuracy;
-                                    
-                                    return (
-                                        <Col key={`move-${index}`} xs={24} sm={12} md={8}>
-                                            <div className="move-card">
-                                                <div className="move-name">
-                                                    <Text strong>
-                                                        {formatPokemonName(moveName)}
-                                                    </Text>
-                                                </div>
-                                                <div className="move-details">
+                            {/* Movimientos */}
+                            {pokemon.moves && Array.isArray(pokemon.moves) && pokemon.moves.length > 0 && (
+                                <div className="moves-section">
+                                    <Text strong>Moves:</Text>
+                                    <div className="moves-grid">
+                                        <Row gutter={[8, 8]}>
+                                            {pokemon.moves.map((move, index) => {
+                                                if (!move || typeof move !== 'object') {
+                                                    return null;
+                                                }
+                                                const moveType = move.type || 'Unknown Type';
+                                                return (
                                                     <Tag color="purple" className="move-type-tag">
                                                         {formatPokemonName(moveType)}
                                                     </Tag>
-                                                    <div className="move-stats">
-                                                        {movePower !== null && movePower !== undefined && (
-                                                            <Text type="secondary">
-                                                                Power: {movePower}
-                                                            </Text>
-                                                        )}
-                                                        {moveAccuracy !== null && moveAccuracy !== undefined && (
-                                                            <Text type="secondary">
-                                                                Acc: {moveAccuracy}%
-                                                            </Text>
-                                                        )}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </Col>
-                                    );
-                                })}
-                            </Row>
-                        </div>
-                    </>
-                )}
+                                                );
+                                            })}
+                                        </Row>
+                                    </div>
+                                </div>
+                            )}
 
-                {/* Formas */}
-                {pokemon.forms && Array.isArray(pokemon.forms) && pokemon.forms.length > 0 && (
-                    <>
-                        <Divider />
-                        <Title level={4}>Forms</Title>
-                        <div className="forms-grid">
-                            <Row gutter={[8, 8]}>
-                                {pokemon.forms.map((form, index) => {
-                                    if (!form || typeof form !== 'object' || !form.name) {
-                                        return null;
-                                    }
-                                    
-                                    return (
-                                        <Col key={`form-${index}`} xs={12} sm={8} md={6}>
-                                            <Tag 
-                                                color="orange" 
-                                                className="form-tag"
-                                            >
-                                                {formatPokemonName(form.name)}
-                                            </Tag>
-                                        </Col>
-                                    );
-                                })}
-                            </Row>
+                            {/* Formas */}
+                            {pokemon.forms && Array.isArray(pokemon.forms) && pokemon.forms.length > 0 && (
+                                <div className="forms-section">
+                                    <Text strong>Forms:</Text>
+                                    <div className="forms-grid">
+                                        <Row gutter={[8, 8]}>
+                                            {pokemon.forms.map((form, index) => {
+                                                if (!form || typeof form !== 'object' || !form.name) {
+                                                    return null;
+                                                }
+
+                                                return (
+                                                    <Col key={`form-${index}`}>
+                                                        <Tag
+                                                            color="orange"
+                                                            className="form-tag"
+                                                        >
+                                                            {formatPokemonName(form.name)}
+                                                        </Tag>
+                                                    </Col>
+                                                );
+                                            })}
+                                        </Row>
+                                    </div>
+                                </div>
+                            )}
                         </div>
-                    </>
-                )}
+                    </Col>
+                </Row>
             </div>
         </Modal>
     );

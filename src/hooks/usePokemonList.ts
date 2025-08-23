@@ -24,10 +24,8 @@ export const usePokemonList = (initialLimit: number = 8) => {
 
     // Función para cargar la lista de Pokémon
     const fetchPokemons = useCallback(async (params: PokemonListParams = {}) => {
-        console.log('fetchPokemons called with params:', params);
         // No cargar si hay una búsqueda activa
         if (searchRef.current.isSearchActive) {
-            console.log('Search is active, skipping fetchPokemons');
             return;
         }
         
@@ -117,7 +115,6 @@ export const usePokemonList = (initialLimit: number = 8) => {
 
     // Función para refrescar la lista
     const refreshPokemons = useCallback(() => {
-        console.log('refreshPokemons called with initialLimit:', initialLimit);
         searchRef.current.clearSearch();
         paginationRef.current.resetPagination();
         fetchPokemons({

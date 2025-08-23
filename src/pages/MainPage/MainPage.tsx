@@ -35,13 +35,13 @@ export default function MainPage() {
 
     return (
         <div data-testid="main-page" className="main-page">
-
-            <ScrollVelocity
-                texts={['Find your favorite Pokemon', ' Pokemon Find your favorite']}
-                velocity={10}
-                className="custom-scroll-text"
-            />
-
+            <div className="main-page-header">
+                <ScrollVelocity
+                    texts={['Find your favorite Pokemon', ' Pokemon Find your favorite']}
+                    velocity={10}
+                    className="custom-scroll-text"
+                />
+            </div>
 
             <Button
                 type="primary"

@@ -46,10 +46,7 @@ export const getPokemons = async (params: PokemonListParams = {}): Promise<Pokem
     
     // Obtener el token del localStorage
     const token = localStorage.getItem('token');
-    
-    console.log('🔑 API - Token from localStorage:', token ? 'Token exists' : 'No token');
-    console.log('🔑 API - Calling endpoint:', `${API_BASE_URL}/api/pokemon?limit=${limit}&offset=${offset}`);
-    
+
     if (!token) {
         throw new Error('No authentication token found. Please login first.');
     }
@@ -62,10 +59,6 @@ export const getPokemons = async (params: PokemonListParams = {}): Promise<Pokem
                 'Content-Type': 'application/json',
             },
         });
-
-        console.log('🔑 API - Response status:', response.status);
-        console.log('🔑 API - Response ok:', response.ok);
-
         if (!response.ok) {
             if (response.status === 401) {
                 throw new Error('Unauthorized. Please login again.');
@@ -79,7 +72,6 @@ export const getPokemons = async (params: PokemonListParams = {}): Promise<Pokem
         }
 
         const data = await response.json();
-        console.log('🔑 API - Response data received:', data ? 'Data exists' : 'No data');
         return data;
 
     } catch (error) {
