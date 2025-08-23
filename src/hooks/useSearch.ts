@@ -43,6 +43,11 @@ export const useSearch = () => {
     const clearSearch = useCallback(() => {
         setIsSearchActive(false);
         setSearchQuery('');
+        // Asegurar que el estado se limpie completamente
+        setTimeout(() => {
+            setIsSearchActive(false);
+            setSearchQuery('');
+        }, 0);
     }, []);
 
     const setSearchActive = useCallback((active: boolean) => {

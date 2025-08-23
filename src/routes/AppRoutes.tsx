@@ -1,7 +1,6 @@
 import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import LoginPage from '../pages/LoginPage/LoginPage';
 import MainPage from '../pages/MainPage/MainPage';
-import Header from '../components/layout/Header';
 import RouteGuard from '../components/common/RouteGuard/RouteGuard';
 import { ROUTES } from './routes.config';
 import "./AppRoutes.css";
@@ -10,7 +9,13 @@ import "./AppRoutes.css";
 const AppLayout = () => {
     return (
         <div className="app-layout">
+
+
+            
+
+
             <main className="main-content">
+
                 <Outlet />
             </main>
         </div>

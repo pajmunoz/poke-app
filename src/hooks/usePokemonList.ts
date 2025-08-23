@@ -24,8 +24,10 @@ export const usePokemonList = (initialLimit: number = 8) => {
 
     // Función para cargar la lista de Pokémon
     const fetchPokemons = useCallback(async (params: PokemonListParams = {}) => {
+        console.log('fetchPokemons called with params:', params);
         // No cargar si hay una búsqueda activa
         if (searchRef.current.isSearchActive) {
+            console.log('Search is active, skipping fetchPokemons');
             return;
         }
         
@@ -92,6 +94,16 @@ export const usePokemonList = (initialLimit: number = 8) => {
                     hasNext: false,
                     hasPrevious: false
                 });
+            } else {
+                // Si no se encontró el Pokémon, vaciar la lista
+                setPokemons([]);
+                paginationRef.current.updatePagination({
+                    total: 0,
+                    limit: 0,
+                    offset: 0,
+                    hasNext: false,
+                    hasPrevious: false
+                });
             }
             return result;
         } catch (err) {
@@ -105,23 +117,24 @@ export const usePokemonList = (initialLimit: number = 8) => {
 
     // Función para refrescar la lista
     const refreshPokemons = useCallback(() => {
+        console.log('refreshPokemons called with initialLimit:', initialLimit);
         searchRef.current.clearSearch();
         paginationRef.current.resetPagination();
         fetchPokemons({
-            limit: paginationRef.current.pagination.limit,
+            limit: initialLimit,
             offset: 0
         });
-    }, [fetchPokemons]);
+    }, [fetchPokemons, initialLimit]);
 
     // Función para limpiar búsqueda y volver a la lista normal
     const clearSearch = useCallback(() => {
         searchRef.current.clearSearch();
         paginationRef.current.resetPagination();
         fetchPokemons({
-            limit: paginationRef.current.pagination.limit,
+            limit: initialLimit,
             offset: 0
         });
-    }, [fetchPokemons]);
+    }, [fetchPokemons, initialLimit]);
 
     // Cargar Pokémon al montar el componente
     useEffect(() => {

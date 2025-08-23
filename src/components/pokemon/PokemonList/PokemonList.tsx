@@ -6,6 +6,7 @@ import Pagination from "../../common/Pagination/Pagination";
 import PokemonDetailModal from "../PokemonDetailModal/PokemonDetailModal";
 import { useState, useEffect } from "react";
 import "./PokemonList.css";
+import Loader from "../../common/Loader/Loader";
 
 const { Search } = Input;
 const { Text } = Typography;
@@ -40,6 +41,13 @@ export default function PokemonList() {
         setLocalSearchQuery(searchQuery);
     }, [searchQuery]);
 
+    // Cuando se limpia la búsqueda, recargar todos los Pokémon
+    useEffect(() => {
+        if (!isSearchActive && !searchQuery.trim()) {
+            refreshPokemons();
+        }
+    }, [isSearchActive, searchQuery, refreshPokemons]);
+
     const handleSearch = (value: string) => {
         searchPokemon(value);
     };
@@ -48,9 +56,13 @@ export default function PokemonList() {
         const value = e.target.value;
         setLocalSearchQuery(value);
 
-        // Si se borra todo el texto, limpiar la búsqueda
+        // Si se borra todo el texto, limpiar la búsqueda y volver a cargar todos los Pokémon
         if (!value.trim()) {
             clearSearch();
+            // Forzar la recarga de todos los Pokémon
+            setTimeout(() => {
+                refreshPokemons();
+            }, 100);
         }
     };
 
@@ -101,6 +113,8 @@ export default function PokemonList() {
                 />
             </div>
 
+        
+
             {/* Manejo de errores */}
             {error && (
                 <Alert
@@ -115,23 +129,12 @@ export default function PokemonList() {
                 />
             )}
 
+
             {/* Contenido principal */}
             <div data-testid="pokemon-content">
                 {loading ? (
-                    <div
-                        data-testid="loading-state"
-                        style={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            padding: '60px 20px',
-                            textAlign: 'center'
-                        }}
-                    >
-
-                    </div>
-                ) : hasPokemons ? (
+                    <Loader />
+                ) : pokemons.length > 0 ? (
                     <>
                         {/* Lista de Pokémon */}
                         <Row
@@ -146,16 +149,40 @@ export default function PokemonList() {
                             ))}
                         </Row>
 
-                        {/* Paginación */}
-                        <Pagination
-                            current={currentPage}
-                            total={pagination.total}
-                            pageSize={pagination.limit}
-                            onChange={handlePageChange}
-                            onShowSizeChange={handleLimitChange}
-                            disabled={loading}
-                        />
+                        {/* Paginación - solo mostrar si no hay búsqueda activa */}
+                        {!isSearchActive && (
+                            <Pagination
+                                current={currentPage}
+                                total={pagination.total}
+                                pageSize={pagination.limit}
+                                onChange={handlePageChange}
+                                onShowSizeChange={handleLimitChange}
+                                disabled={loading}
+                            />
+                        )}
                     </>
+                ) : isSearchActive ? (
+                    <div
+                        data-testid="no-pokemon-state"
+                        style={{
+                            textAlign: 'center',
+                            padding: '60px 20px',
+                            color: '#666'
+                        }}
+                    >
+                        <Text style={{ fontSize: 18, marginBottom: 16, display: 'block' }}>
+                            No se encontraron Pokémon con el nombre "{searchQuery}"
+                        </Text>
+                        <Text style={{ fontSize: 14, marginBottom: 24, display: 'block', color: '#999' }}>
+                            Intenta con otro nombre o revisa la ortografía
+                        </Text>
+                        <Button data-testid="try-again-button" onClick={clearSearch} style={{ marginRight: 8 }}>
+                            Limpiar Búsqueda
+                        </Button>
+                        <Button data-testid="try-again-button" onClick={refreshPokemons}>
+                            Ver Todos los Pokémon
+                        </Button>
+                    </div>
                 ) : (
                     <div
                         data-testid="no-pokemon-state"
@@ -166,34 +193,13 @@ export default function PokemonList() {
                         }}
                     >
                         <Text style={{ fontSize: 18, marginBottom: 16, display: 'block' }}>
-                            No Pokemon found.
+                            No se pudieron cargar los Pokémon
                         </Text>
                         <Button data-testid="try-again-button" onClick={refreshPokemons}>
-                            Try Again
+                            Intentar de Nuevo
                         </Button>
                     </div>
                 )}
-            </div>
-
-            {/* Botón de refresh */}
-            <div
-                data-testid="refresh-container"
-                style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    marginTop: '24px',
-                    padding: '20px 0'
-                }}
-            >
-                <Button
-                    data-testid="refresh-button"
-                    icon={<ReloadOutlined />}
-                    onClick={refreshPokemons}
-                    loading={loading}
-                    type="primary"
-                >
-                    Refresh Pokemon List
-                </Button>
             </div>
 
             {/* Modal de detalle */}
