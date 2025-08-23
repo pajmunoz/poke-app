@@ -8,6 +8,16 @@ vi.mock('../../components/pokemon/PokemonList/PokemonList', () => ({
     default: () => <div data-testid="pokemon-list">Pokemon List</div>
 }));
 
+// Mock useNavigate
+const mockNavigate = vi.fn();
+vi.mock('react-router-dom', async () => {
+    const actual = await vi.importActual('react-router-dom');
+    return {
+        ...actual,
+        useNavigate: () => mockNavigate
+    };
+});
+
 describe('MainPage', () => {
     it('should render the main page with close session button', () => {
         render(
@@ -16,7 +26,8 @@ describe('MainPage', () => {
             </BrowserRouter>
         );
         
-        expect(screen.getByText('Close Session')).toBeInTheDocument();
+        // The close session button should be present (it's an icon-only button)
+        expect(screen.getByRole('button')).toBeInTheDocument();
         expect(screen.getByTestId('pokemon-list')).toBeInTheDocument();
     });
 });

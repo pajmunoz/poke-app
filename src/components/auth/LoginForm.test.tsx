@@ -17,8 +17,8 @@ describe('LoginForm', () => {
     it('should display correct labels and button text', () => {
         render(<LoginForm onSubmit={mockOnSubmit} />);
         
-        expect(screen.getByText('Username')).toBeInTheDocument();
-        expect(screen.getByText('Password')).toBeInTheDocument();
+        expect(screen.getByPlaceholderText('Username')).toBeInTheDocument();
+        expect(screen.getByPlaceholderText('Password')).toBeInTheDocument();
         expect(screen.getByText('Login')).toBeInTheDocument();
     });
 

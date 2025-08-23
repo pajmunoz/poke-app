@@ -54,9 +54,10 @@ describe('PokemonList', () => {
         expect(screen.getByTestId('pagination')).toBeInTheDocument();
     });
 
-    it('should render refresh button', () => {
+    it('should handle search functionality', () => {
         render(<PokemonList />);
-        expect(screen.getByTestId('refresh-button')).toBeInTheDocument();
-        expect(screen.getByText('Refresh Pokemon List')).toBeInTheDocument();
+        const searchInput = screen.getByTestId('pokemon-search');
+        expect(searchInput).toBeInTheDocument();
+        expect(searchInput).toHaveAttribute('placeholder', 'Search Pokemon by name...');
     });
 });
