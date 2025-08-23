@@ -13,9 +13,14 @@
     position: absolute;
     z-index: 100;
     max-width: 100%;
-    top: 5em;
+    top: 0;
 
 }
 .title {
     height: 1.5em;
+    color: #cdcdcd;
+}
+input {
+    caret-color: rgb(255, 77, 79);
+    
 }

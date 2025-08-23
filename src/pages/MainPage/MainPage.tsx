@@ -39,7 +39,7 @@ export default function MainPage() {
                 <ScrollVelocity
                     texts={['Find your favorite Pokemon', ' Pokemon Find your favorite']}
                     velocity={10}
-                    className="custom-scroll-text"
+                    className="title"
                 />
             </div>
 

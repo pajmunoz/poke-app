@@ -8,3 +8,13 @@
     width: 100%;
 
 }
+.title {
+    height: 1.5em;
+    color: #cdcdcd;
+}
+.ant-btn {
+    background-color: #ff4d4f;
+}
+:where(.css-dev-only-do-not-override-1v28nim).ant-btn-variant-solid:not(:disabled):not(.ant-btn-disabled):hover{
+    background-color: #000000;
+}
