@@ -1,7 +1,21 @@
+.login-form-container {
+    position: relative;
+    z-index: 100;
+}
 .login-form {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 100vh;
+}
+.title-container {
+    position: absolute;
+    z-index: 100;
+    max-width: 100%;
+    top: 5em;
+
+}
+.title {
+    height: 1.5em;
 }
