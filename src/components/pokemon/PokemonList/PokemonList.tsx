@@ -5,7 +5,7 @@ import PokemonCard from "../PokemonCard/PokemonCard";
 import Pagination from "../../common/Pagination/Pagination";
 import PokemonDetailModal from "../PokemonDetailModal/PokemonDetailModal";
 import { useState, useEffect } from "react";
-import Loader from "../../common/Loader/Loader";
+import "./PokemonList.css";
 
 const { Search } = Input;
 const { Text } = Typography;
@@ -73,7 +73,7 @@ export default function PokemonList() {
     };
 
     return (
-        <div data-testid="pokemon-list">
+        <div data-testid="pokemon-list" className="pokemon-list">
             {/* Barra de búsqueda */}
             <div
                 data-testid="search-container"
@@ -85,6 +85,10 @@ export default function PokemonList() {
                 }}
             >
                 <Search
+                    size="large"
+                    allowClear={true}
+                    variant="outlined"
+                    color="cyan"
                     data-testid="pokemon-search"
                     placeholder="Search Pokemon by name..."
                     onSearch={handleSearch}
