@@ -84,21 +84,21 @@ export default function MainPage() {
             <Modal
                 open={showLogoutModal}
                 onClose={cancelLogout}
-                title="Confirmar Cierre de Sesión"
+                title="Confirm Logout"
                 width={400}
                 footer={
                     <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end' }}>
                         <Button onClick={cancelLogout}>
-                            Cancelar
+                            Cancel
                         </Button>
                         <Button type="primary" danger onClick={confirmLogout}>
-                            Cerrar Sesión
+                            Close Session
                         </Button>
                     </div>
                 }
             >
-                <p>¿Estás seguro de que quieres cerrar la sesión?</p>
-                <p>Se eliminarán todos los datos de tu sesión actual.</p>
+                <p>Are you sure you want to close your session?</p>
+                <p>All your session data will be deleted.</p>
             </Modal>
         </div>
     );

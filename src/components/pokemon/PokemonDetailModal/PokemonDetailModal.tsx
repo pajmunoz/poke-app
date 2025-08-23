@@ -42,7 +42,6 @@ interface PokemonDetailModalProps {
 }
 
 export default function PokemonDetailModal({ pokemon, open, onClose }: PokemonDetailModalProps) {
-    console.log('pokemon', pokemon);
     if (!pokemon) return null;
 
     // Función para obtener el color del tipo del Pokémon
@@ -184,7 +183,7 @@ export default function PokemonDetailModal({ pokemon, open, onClose }: PokemonDe
                                                 }
 
                                                 return (
-                                                    <Col key={`form-${index}`}>
+                                                    <Col >
                                                         <Tag
                                                             color="orange"
                                                             className="form-tag"

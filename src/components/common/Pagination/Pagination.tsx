@@ -1,4 +1,5 @@
 import { Pagination as AntPagination, Flex } from "antd";
+import './Pagination.css';
 
 interface PaginationProps {
     current: number;
@@ -18,22 +19,24 @@ export default function Pagination({
     disabled = false
 }: PaginationProps) {
     return (
-        <Flex justify="center" align="center" style={{ margin: '20px', width: '100%' }}>
+        <div className="pagination-container">
+            <Flex justify="center" align="center" style={{ margin: '20px', width: '100%' }}>
 
-            <AntPagination
-                data-testid="pagination"
-                current={current}
-                total={total}
-                pageSize={pageSize || 8}
-                showSizeChanger
-                showQuickJumper
-                showTotal={(total, range) =>
-                    `${range[0]}-${range[1]} of ${total} Pokemon`
-                }
-                onChange={onChange}
-                onShowSizeChange={onShowSizeChange}
-                disabled={disabled}
-            />
-        </Flex>
+                <AntPagination
+                    data-testid="pagination"
+                    current={current}
+                    total={total}
+                    pageSize={pageSize || 8}
+                    showSizeChanger
+                    showQuickJumper
+                    showTotal={(total, range) =>
+                        `${range[0]}-${range[1]} of ${total} Pokemon`
+                    }
+                    onChange={onChange}
+                    onShowSizeChange={onShowSizeChange}
+                    disabled={disabled}
+                />
+            </Flex>
+        </div>
     );
 }

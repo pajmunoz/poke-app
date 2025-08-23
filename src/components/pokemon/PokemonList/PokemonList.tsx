@@ -143,7 +143,10 @@ export default function PokemonList() {
                             style={{ 
                                 marginBottom: '32px', 
                                 display: pokemons.length === 1 ? 'block' : 'flex',
-                                justifyContent: pokemons.length === 1 ? 'center' : 'flex-start'
+                                justifyContent: pokemons.length === 1 ? 'center' : 'flex-start',
+                                padding: '0 2em',
+                                maxWidth: '1200px'
+                               
                             }}
                         >
                             {pokemons.map((pokemon: any) => (

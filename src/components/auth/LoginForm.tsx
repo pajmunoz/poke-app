@@ -70,10 +70,10 @@ export default function LoginForm({ onSubmit, isLoading = false, initialValues =
                 </Form.Item>
                 <Form.Item>
                     <Button
-                        color="cyan" 
+                        type="primary"
                         variant="filled"
                         size="large"
-                        style={{ fontSize: '1.5em', textAlign: 'center', width: '200px' }}
+                        style={{ fontSize: '1.5em', textAlign: 'center', width: '200px', backgroundColor: '#ff4d4f', color: '#fff' }}
                         data-testid="login-button"
                         onClick={handleSubmit}
                         disabled={isDisabled || isLoading}
