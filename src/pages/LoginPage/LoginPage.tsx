@@ -1,14 +1,17 @@
-import { Divider, message } from "antd";
+import { Divider, message, Button } from "antd";
 import Header from "../../components/layout/Header";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LoginForm from "../../components/auth/LoginForm";
 import { loginUser } from "../../api/authAPI";
+import Modal from "../../components/common/Modal/Modal";
 
 export default function LoginPage() {
     const navigate = useNavigate();
     const [messageApi, contextHolder] = message.useMessage();
     const [isLoading, setIsLoading] = useState(false);
+    const [showCredentialsModal, setShowCredentialsModal] = useState(false);
+
 
     const onSubmit = async (values: any) => {
         setIsLoading(true);
@@ -80,11 +83,46 @@ export default function LoginPage() {
       
             {contextHolder}
 
+            {/* Botón para mostrar credenciales */}
+            <div style={{ 
+                textAlign: 'center', 
+                marginTop: '20px',
+                marginBottom: '20px'
+            }}>
+                <Button 
+                    type="dashed" 
+                    onClick={() => setShowCredentialsModal(true)}
+                    style={{ fontSize: '12px' }}
+                >
+                    ¿Olvidaste las credenciales?
+                </Button>
+            </div>
 
             <LoginForm
                 onSubmit={onSubmit}
                 isLoading={isLoading}
             />
+
+            {/* Modal con credenciales */}
+            <Modal
+                open={showCredentialsModal}
+                onClose={() => setShowCredentialsModal(false)}
+                title="Credenciales de Administrador"
+                width={400}
+                footer={null}
+            >
+                <div style={{ textAlign: 'center', padding: '20px 0' }}>
+                    <h3 style={{ color: '#1890ff', marginBottom: '20px' }}>
+                        Usuario: <strong>admin</strong>
+                    </h3>
+                    <h3 style={{ color: '#1890ff', marginBottom: '20px' }}>
+                        Contraseña: <strong>admin</strong>
+                    </h3>
+                    <p style={{ color: '#666', fontSize: '14px' }}>
+                        Usa estas credenciales para acceder a la aplicación
+                    </p>
+                </div>
+            </Modal>
         </div>
     );
 } 
